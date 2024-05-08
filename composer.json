@@ -1,0 +1,22 @@
+{
+  "name": "g-classrom/eike",
+  "description": "api simplified for google classroom integration",
+  "type": "library",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "bilal",
+      "email": "bilalahmedsiddiqui@folio3.com"
+    }
+  ],
+  "require": {
+    "google/apiclient": "v2.15.4",
+    "guzzlehttp/guzzle": "7.4.5",
+    "ext-json": "*"
+  },
+  "autoload": {
+    "psr-4": {
+      "GoogleClassroomEike\\": "src/"
+    }
+  }
+}
