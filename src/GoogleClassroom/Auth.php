@@ -32,7 +32,7 @@ class Auth extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage());
+			throw new \Exception($e->getMessage());
 		}
 	}
 
@@ -66,7 +66,7 @@ class Auth extends ClientBase
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function getUser($token)
 	{
@@ -81,7 +81,7 @@ class Auth extends ClientBase
 			$this->user  = json_decode($res->getBody()->getContents());
 			return $this->user;
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}

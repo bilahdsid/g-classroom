@@ -17,7 +17,7 @@ class Courses extends ClientBase
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function getList()
 	{
@@ -26,13 +26,13 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function create($body)
 	{
@@ -42,12 +42,12 @@ class Courses extends ClientBase
 			return $res->getBody()->getContents();
 
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function getStudentsByCourse($courseId)
 	{
@@ -56,13 +56,13 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function getTeachersByCourse($courseId)
 	{
@@ -71,13 +71,13 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function getAnnouncementsByCourse($courseId)
 	{
@@ -86,13 +86,13 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function getCourseworkByCourse($courseId)
 	{
@@ -101,13 +101,13 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function getClassworkStudentSubmissions($courseId, $studentId)
 	{
@@ -116,13 +116,13 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function addStudent($body, $courseId)
 	{
@@ -131,13 +131,13 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function addCoursework($body, $courseId)
 	{
@@ -146,13 +146,13 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function addClassworkStudentSubmissionsTurnIn($courseId, $studentId, $submission)
 	{
@@ -161,13 +161,13 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception
 	 */
 	public function addGradeCourseworkSubmission($courseId, $studentId, $submission)
 	{
@@ -176,7 +176,7 @@ class Courses extends ClientBase
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 
 	}

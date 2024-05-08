@@ -14,7 +14,7 @@ class UserProfile extends ClientBase
 	}
 
 	/**
-	 * @throws \HttpException
+	 * @throws \Exception()
 	 */
 	public function getUserProfile($token)
 	{
@@ -29,7 +29,7 @@ class UserProfile extends ClientBase
 			return $res->getBody()->getContents();
 
 		}catch (\Exception $e){
-			throw new \HttpException($e->getMessage(),$e->getCode());
+			throw new \Exception($e->getMessage(),$e->getCode());
 		}
 	}
 
