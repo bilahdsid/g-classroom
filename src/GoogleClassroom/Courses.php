@@ -127,7 +127,7 @@ class Courses extends ClientBase
 	public function addStudent($body, $courseId)
 	{
 		try{
-			$request = new Request('POST', $this->url.'/.'.$courseId.'/students', $this->headers);
+			$request = new Request('POST', $this->url.'/.'.$courseId.'/students', $this->headers,$body);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -142,7 +142,7 @@ class Courses extends ClientBase
 	public function addCoursework($body, $courseId)
 	{
 		try{
-			$request = new Request('POST', $this->url.'/.'.$courseId.'/courseWork', $this->headers);
+			$request = new Request('POST', $this->url.'/.'.$courseId.'/courseWork', $this->headers,$body);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
