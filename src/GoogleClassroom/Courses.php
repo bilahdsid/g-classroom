@@ -52,7 +52,7 @@ class Courses extends ClientBase
 	public function getStudentsByCourse($courseId)
 	{
 		try{
-			$request = new Request('GET', $this->url.'/.'.$courseId.'/students', $this->headers);
+			$request = new Request('GET', $this->url.'/'.$courseId.'/students', $this->headers);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -67,7 +67,7 @@ class Courses extends ClientBase
 	public function getTeachersByCourse($courseId)
 	{
 		try{
-			$request = new Request('GET', $this->url.'/.'.$courseId.'/teachers', $this->headers);
+			$request = new Request('GET', $this->url.'/'.$courseId.'/teachers', $this->headers);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -82,7 +82,7 @@ class Courses extends ClientBase
 	public function getAnnouncementsByCourse($courseId)
 	{
 		try{
-			$request = new Request('GET', $this->url.'/.'.$courseId.'/announcements', $this->headers);
+			$request = new Request('GET', $this->url.'/'.$courseId.'/announcements', $this->headers);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -97,7 +97,7 @@ class Courses extends ClientBase
 	public function getCourseworkByCourse($courseId)
 	{
 		try{
-			$request = new Request('GET', $this->url.'/.'.$courseId.'/courseWork', $this->headers);
+			$request = new Request('GET', $this->url.'/'.$courseId.'/courseWork', $this->headers);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -112,7 +112,7 @@ class Courses extends ClientBase
 	public function getClassworkStudentSubmissions($courseId, $studentId)
 	{
 		try{
-			$request = new Request('GET', $this->url.'/.'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions', $this->headers);
+			$request = new Request('GET', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions', $this->headers);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -127,7 +127,7 @@ class Courses extends ClientBase
 	public function addStudent($body, $courseId)
 	{
 		try{
-			$request = new Request('POST', $this->url.'/.'.$courseId.'/students', $this->headers,$body);
+			$request = new Request('POST', $this->url.'/'.$courseId.'/students', $this->headers,$body);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -142,7 +142,7 @@ class Courses extends ClientBase
 	public function addCoursework($body, $courseId)
 	{
 		try{
-			$request = new Request('POST', $this->url.'/.'.$courseId.'/courseWork', $this->headers,$body);
+			$request = new Request('POST', $this->url.'/'.$courseId.'/courseWork', $this->headers,$body);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -157,7 +157,7 @@ class Courses extends ClientBase
 	public function addClassworkStudentSubmissionsTurnIn($courseId, $studentId, $submission)
 	{
 		try{
-			$request = new Request('POST', $this->url.'/.'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.':turnIn', $this->headers);
+			$request = new Request('POST', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.':turnIn', $this->headers);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -172,7 +172,7 @@ class Courses extends ClientBase
 	public function addGradeCourseworkSubmission($courseId, $studentId, $submission)
 	{
 		try{
-			$request = new Request('PATCH', $this->url.'/.'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.'?updateMask=draftGrade', $this->headers);
+			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.'?updateMask=draftGrade', $this->headers);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
