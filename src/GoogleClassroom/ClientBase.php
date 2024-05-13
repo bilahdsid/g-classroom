@@ -7,15 +7,21 @@ use GuzzleHttp\Client;
 
 class ClientBase
 {
-	protected $client;
+	protected Client $client;
 
-	protected $token;
+	protected $accessToken;
 
 	protected $user;
 
 	public function __construct()
 	{
 		$this->client = new Client();
+	}
+
+	protected function setAccessToken($token)
+	{
+		$this->accessToken = $token;
+
 	}
 
 }

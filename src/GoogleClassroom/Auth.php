@@ -2,6 +2,8 @@
 
 namespace GoogleClassroomEike\GoogleClassroom;
 
+use Google_Client;
+use Google_Service_Classroom;
 use GuzzleHttp\Psr7\Request;
 
 class Auth extends ClientBase
@@ -10,6 +12,8 @@ class Auth extends ClientBase
 	private $redirectUri;
 
 	private $clientSecret;
+
+
 	/**
 	 * @throws \Exception
 	 */
@@ -34,6 +38,49 @@ class Auth extends ClientBase
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage());
 		}
+	}
+
+	public function getAuthCodeSdk()
+	{
+		// Create a new Google_Client instance
+		$gClient = new Google_Client();
+		$gClient->setClientId($this->clientId);
+		$gClient->setClientSecret($this->clientSecret);
+		$gClient->setRedirectUri($this->redirectUri);
+		//$gClient->setRedirectUri("urn:ietf:wg:oauth:2.0:oob");
+		//$gClient->setAuthConfig(['client_id'=>$this->clientId,'client_secret'=>$this->clientSecret,'redirect_uris'=>$this->redirectUri]);
+
+
+		$gClient->addScope([Google_Service_Classroom::CLASSROOM_COURSES,Google_Service_Classroom::CLASSROOM_ANNOUNCEMENTS,Google_Service_Classroom::CLASSROOM_COURSEWORK_ME,Google_Service_Classroom::CLASSROOM_COURSEWORK_STUDENTS,Google_Service_Classroom::CLASSROOM_TOPICS]); // Example scope, add more as needed
+
+		// Load previously authorized credentials from a file
+//		$credentialsPath = '~/.credentials/google-classroom-php-quickstart.json'; // Adjust path as needed
+//		if (file_exists($credentialsPath)) {
+//			$accessToken = json_decode(file_get_contents($credentialsPath), true);
+//			$gClient->setAccessToken($accessToken);
+//		} else {
+			// Request authorization from the user
+			$authUrl = $gClient->createAuthUrl();
+
+			return $authUrl;
+			header('Location: '.$authUrl); exit;
+			//printf("Open the following link in your browser:\n%s\n", $authUrl);
+			//print 'Enter verification code: ';
+			//$authCode = trim(fgets(STDIN));
+
+			// Exchange authorization code for an access token
+			//$accessToken = $gClient->fetchAccessTokenWithAuthCode($authCode);
+			//$this->setAccessToken($accessToken);
+
+			// Save the credentials for the next run
+//			if (!file_exists(dirname($credentialsPath))) {
+//				mkdir(dirname($credentialsPath), 0700, true);
+//			}
+//			file_put_contents($credentialsPath, json_encode($accessToken));
+//			printf("Credentials saved to %s\n", $credentialsPath);
+		//}
+
+
 	}
 
 	/**
