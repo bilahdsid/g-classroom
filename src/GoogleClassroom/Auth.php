@@ -119,7 +119,7 @@ class Auth extends ClientBase
 	public function getUser($token)
 	{
 		try{
-			$url = 'https://oauth2.googleapis.com/oauth2/v1/userinfo?access_token='.$token;
+			$url = 'https://www.googleapis.com/oauth2/v1/userinfo?access_token='.$token;
 			$request = new Request('GET', $url);
 			$res = $this->client->send($request);
 			$this->user  = json_decode($res->getBody()->getContents());
