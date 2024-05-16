@@ -2,6 +2,7 @@
 
 namespace GoogleClassroomEike\GoogleClassroom;
 
+use Google\Service\Oauth2;
 use Google_Client;
 use Google_Service_Classroom;
 use GuzzleHttp\Psr7\Request;
@@ -51,7 +52,7 @@ class Auth extends ClientBase
 		//$gClient->setAuthConfig(['client_id'=>$this->clientId,'client_secret'=>$this->clientSecret,'redirect_uris'=>$this->redirectUri]);
 
 
-		$gClient->addScope([Google_Service_Classroom::CLASSROOM_COURSES,Google_Service_Classroom::CLASSROOM_ANNOUNCEMENTS,Google_Service_Classroom::CLASSROOM_COURSEWORK_ME,Google_Service_Classroom::CLASSROOM_COURSEWORK_STUDENTS,Google_Service_Classroom::CLASSROOM_TOPICS]); // Example scope, add more as needed
+		$gClient->addScope([Oauth2::OPENID,Oauth2::USERINFO_EMAIL,Google_Service_Classroom::CLASSROOM_PROFILE_EMAILS,Google_Service_Classroom::CLASSROOM_PROFILE_PHOTOS,Google_Service_Classroom::CLASSROOM_COURSES,Google_Service_Classroom::CLASSROOM_ANNOUNCEMENTS,Google_Service_Classroom::CLASSROOM_COURSEWORK_ME,Google_Service_Classroom::CLASSROOM_COURSEWORK_STUDENTS,Google_Service_Classroom::CLASSROOM_TOPICS]); // Example scope, add more as needed
 
 		// Load previously authorized credentials from a file
 //		$credentialsPath = '~/.credentials/google-classroom-php-quickstart.json'; // Adjust path as needed
@@ -118,12 +119,8 @@ class Auth extends ClientBase
 	public function getUser($token)
 	{
 		try{
-			$url = 'https://oauth2.googleapis.com/oauth2/v1/userinfo';
-
-			$headers = [
-				'Authorization' => 'Bearer '.$token
-			];
-			$request = new Request('GET', 'https://www.googleapis.com/oauth2/v1/userinfo', $headers);
+			$url = 'https://oauth2.googleapis.com/oauth2/v1/userinfo?access_token='.$token;
+			$request = new Request('GET', $url);
 			$res = $this->client->send($request);
 			$this->user  = json_decode($res->getBody()->getContents());
 			return $this->user;
