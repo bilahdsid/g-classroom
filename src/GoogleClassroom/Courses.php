@@ -172,7 +172,8 @@ class Courses extends ClientBase
 	public function addGradeCourseworkSubmission($courseId, $studentId, $submission,$body)
 	{
 		try{
-			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.'?updateMask=draftGrade', $this->headers,$body);
+			$updateMask = array_keys(json_decode($body,true));
+			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.'?updateMask='.$updateMask[0], $this->headers,$body);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
