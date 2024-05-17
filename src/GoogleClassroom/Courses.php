@@ -154,10 +154,10 @@ class Courses extends ClientBase
 	/**
 	 * @throws \Exception
 	 */
-	public function addClassworkStudentSubmissionsTurnIn($courseId, $studentId, $submission)
+	public function addClassworkStudentSubmissionsTurnIn($courseId, $studentId, $submission,$body)
 	{
 		try{
-			$request = new Request('POST', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.':turnIn', $this->headers);
+			$request = new Request('POST', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.':turnIn', $this->headers,$body);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
@@ -169,10 +169,10 @@ class Courses extends ClientBase
 	/**
 	 * @throws \Exception
 	 */
-	public function addGradeCourseworkSubmission($courseId, $studentId, $submission)
+	public function addGradeCourseworkSubmission($courseId, $studentId, $submission,$body)
 	{
 		try{
-			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.'?updateMask=draftGrade', $this->headers);
+			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.'?updateMask=draftGrade', $this->headers,$body);
 			$res = $this->client->send($request);
 			return $res->getBody()->getContents();
 		}catch (\Exception $e){
