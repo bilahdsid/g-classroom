@@ -24,7 +24,7 @@ class Courses extends ClientBase
 		try{
 			$request = new Request('GET', $this->url, $this->headers);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
@@ -39,7 +39,7 @@ class Courses extends ClientBase
 		try{
 			$request = new Request('POST', $this->url, $this->headers, $body);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
@@ -54,7 +54,7 @@ class Courses extends ClientBase
 		try{
 			$request = new Request('GET', $this->url.'/'.$courseId.'/students', $this->headers);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
@@ -69,7 +69,7 @@ class Courses extends ClientBase
 		try{
 			$request = new Request('GET', $this->url.'/'.$courseId.'/teachers', $this->headers);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
@@ -84,7 +84,7 @@ class Courses extends ClientBase
 		try{
 			$request = new Request('GET', $this->url.'/'.$courseId.'/announcements', $this->headers);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
@@ -99,7 +99,7 @@ class Courses extends ClientBase
 		try{
 			$request = new Request('GET', $this->url.'/'.$courseId.'/courseWork', $this->headers);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
@@ -109,12 +109,16 @@ class Courses extends ClientBase
 	/**
 	 * @throws \Exception
 	 */
-	public function getClassworkStudentSubmissions($courseId, $studentId)
+	public function getClassworkStudentSubmissions($courseId, $courseWorkId, $userId = null)
 	{
 		try{
-			$request = new Request('GET', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions', $this->headers);
+			$url = $this->url.'/'.$courseId.'/courseWork/'.$courseWorkId.'/studentSubmissions';
+			if($userId != null){
+				$url = $url.'?userId='.$userId;
+			}
+			$request = new Request('GET',$url , $this->headers);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
@@ -129,7 +133,7 @@ class Courses extends ClientBase
 		try{
 			$request = new Request('POST', $this->url.'/'.$courseId.'/students', $this->headers,$body);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
@@ -144,7 +148,7 @@ class Courses extends ClientBase
 		try{
 			$request = new Request('POST', $this->url.'/'.$courseId.'/courseWork', $this->headers,$body);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
@@ -154,12 +158,12 @@ class Courses extends ClientBase
 	/**
 	 * @throws \Exception
 	 */
-	public function addClassworkStudentSubmissionsTurnIn($courseId, $studentId, $submission,$body)
+	public function addClassworkStudentSubmissionsTurnIn($courseId, $courseWorkId, $submission,$body)
 	{
 		try{
-			$request = new Request('POST', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.':turnIn', $this->headers,$body);
+			$request = new Request('POST', $this->url.'/'.$courseId.'/courseWork/'.$courseWorkId.'/studentSubmissions/'.$submission.':turnIn', $this->headers,$body);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
@@ -169,13 +173,13 @@ class Courses extends ClientBase
 	/**
 	 * @throws \Exception
 	 */
-	public function addGradeCourseworkSubmission($courseId, $studentId, $submission,$body)
+	public function addGradeCourseworkSubmission($courseId, $courseWorkId, $submission,$body)
 	{
 		try{
 			$updateMask = array_keys(json_decode($body,true));
-			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.'?updateMask='.$updateMask[0], $this->headers,$body);
+			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$courseWorkId.'/studentSubmissions/'.$submission.'?updateMask='.$updateMask[0], $this->headers,$body);
 			$res = $this->client->send($request);
-			return json_decode($res->getBody()->getContents());
+			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}

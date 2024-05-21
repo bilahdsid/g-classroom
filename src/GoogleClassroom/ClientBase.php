@@ -24,4 +24,8 @@ class ClientBase
 
 	}
 
+	protected function transformResponse($response){
+		return json_decode($response,true);
+	}
+
 }
