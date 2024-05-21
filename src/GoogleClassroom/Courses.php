@@ -19,10 +19,14 @@ class Courses extends ClientBase
 	/**
 	 * @throws \Exception
 	 */
-	public function getList()
+	public function getList($teacherId = 'me')
 	{
 		try{
-			$request = new Request('GET', $this->url, $this->headers);
+			$url = $this->url;
+			if($teacherId != null){
+				$url = $url.'?teacherId='.$teacherId;
+			}
+			$request = new Request('GET', $url, $this->headers);
 			$res = $this->client->send($request);
 			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
