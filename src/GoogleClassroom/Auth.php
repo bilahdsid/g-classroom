@@ -52,7 +52,7 @@ class Auth extends ClientBase
 		//$gClient->setAuthConfig(['client_id'=>$this->clientId,'client_secret'=>$this->clientSecret,'redirect_uris'=>$this->redirectUri]);
 
 
-		$gClient->addScope([Oauth2::OPENID,Oauth2::USERINFO_EMAIL,Google_Service_Classroom::CLASSROOM_PROFILE_EMAILS,Google_Service_Classroom::CLASSROOM_PROFILE_PHOTOS,Google_Service_Classroom::CLASSROOM_COURSES,Google_Service_Classroom::CLASSROOM_ANNOUNCEMENTS,Google_Service_Classroom::CLASSROOM_COURSEWORK_ME,Google_Service_Classroom::CLASSROOM_COURSEWORK_STUDENTS,Google_Service_Classroom::CLASSROOM_TOPICS]); // Example scope, add more as needed
+		$gClient->addScope([Oauth2::OPENID,Oauth2::USERINFO_EMAIL,Google_Service_Classroom::CLASSROOM_PROFILE_EMAILS,Google_Service_Classroom::CLASSROOM_PROFILE_PHOTOS,Google_Service_Classroom::CLASSROOM_COURSES,Google_Service_Classroom::CLASSROOM_ANNOUNCEMENTS,Google_Service_Classroom::CLASSROOM_COURSEWORK_ME,Google_Service_Classroom::CLASSROOM_COURSEWORK_STUDENTS,Google_Service_Classroom::CLASSROOM_TOPICS,Google_Service_Classroom::CLASSROOM_STUDENT_SUBMISSIONS_ME_READONLY,Google_Service_Classroom::CLASSROOM_STUDENT_SUBMISSIONS_STUDENTS_READONLY]); // Example scope, add more as needed
 
 		// Load previously authorized credentials from a file
 //		$credentialsPath = '~/.credentials/google-classroom-php-quickstart.json'; // Adjust path as needed

@@ -175,7 +175,7 @@ class Courses extends ClientBase
 			$updateMask = array_keys(json_decode($body,true));
 			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$studentId.'/studentSubmissions/'.$submission.'?updateMask='.$updateMask[0], $this->headers,$body);
 			$res = $this->client->send($request);
-			return $res->getBody()->getContents();
+			return json_decode($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
