@@ -2,14 +2,16 @@
 
 namespace GoogleClassroomEike\GoogleClassroom;
 
+use Google\Service\Classroom;
 use GuzzleHttp\Psr7\Request;
 class Courses extends ClientBase
 {
 	private $url = 'https://classroom.googleapis.com/v1/courses';
 	private $headers;
-	public function __construct($token)
+	public function __construct($token,Auth $auth)
 	{
 		parent::__construct();
+		$auth->gClient->refreshToken($token);
 		$this->headers = [
 			'Authorization' => 'Bearer '.$token,
 			'Content-Type' => 'application/json',
@@ -32,7 +34,6 @@ class Courses extends ClientBase
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
-
 	}
 
 	/**

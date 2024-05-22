@@ -3,6 +3,7 @@
 namespace GoogleClassroomEike\GoogleClassroom;
 
 
+use Google_Client;
 use GuzzleHttp\Client;
 
 class ClientBase
@@ -13,15 +14,17 @@ class ClientBase
 
 	protected $user;
 
+	protected $gClient;
+
 	public function __construct()
 	{
 		$this->client = new Client();
+		$this->gClient = new Google_Client();
 	}
 
 	protected function setAccessToken($token)
 	{
 		$this->accessToken = $token;
-
 	}
 
 	protected function transformResponse($response){

@@ -24,6 +24,9 @@ class Auth extends ClientBase
 		$this->clientId = $clientId;
 		$this->redirectUri = $redirectUri;
 		$this->clientSecret = $clientSecret;
+		$this->gClient->setClientId($this->clientId);
+		$this->gClient->setClientSecret($this->clientSecret);
+		$this->gClient->setRedirectUri($this->redirectUri);
 	}
 
 	/**
@@ -44,15 +47,11 @@ class Auth extends ClientBase
 	public function getAuthCodeSdk()
 	{
 		// Create a new Google_Client instance
-		$gClient = new Google_Client();
-		$gClient->setClientId($this->clientId);
-		$gClient->setClientSecret($this->clientSecret);
-		$gClient->setRedirectUri($this->redirectUri);
 		//$gClient->setRedirectUri("urn:ietf:wg:oauth:2.0:oob");
 		//$gClient->setAuthConfig(['client_id'=>$this->clientId,'client_secret'=>$this->clientSecret,'redirect_uris'=>$this->redirectUri]);
 
 
-		$gClient->addScope([Oauth2::OPENID,Oauth2::USERINFO_EMAIL,Google_Service_Classroom::CLASSROOM_PROFILE_EMAILS,Google_Service_Classroom::CLASSROOM_PROFILE_PHOTOS,Google_Service_Classroom::CLASSROOM_COURSES,Google_Service_Classroom::CLASSROOM_ANNOUNCEMENTS,Google_Service_Classroom::CLASSROOM_COURSEWORK_ME,Google_Service_Classroom::CLASSROOM_COURSEWORK_STUDENTS,Google_Service_Classroom::CLASSROOM_TOPICS,Google_Service_Classroom::CLASSROOM_STUDENT_SUBMISSIONS_ME_READONLY,Google_Service_Classroom::CLASSROOM_STUDENT_SUBMISSIONS_STUDENTS_READONLY]); // Example scope, add more as needed
+		$this->gClient->addScope([Oauth2::OPENID,Oauth2::USERINFO_EMAIL,Google_Service_Classroom::CLASSROOM_PROFILE_EMAILS,Google_Service_Classroom::CLASSROOM_PROFILE_PHOTOS,Google_Service_Classroom::CLASSROOM_COURSES,Google_Service_Classroom::CLASSROOM_ANNOUNCEMENTS,Google_Service_Classroom::CLASSROOM_COURSEWORK_ME,Google_Service_Classroom::CLASSROOM_COURSEWORK_STUDENTS,Google_Service_Classroom::CLASSROOM_TOPICS,Google_Service_Classroom::CLASSROOM_STUDENT_SUBMISSIONS_ME_READONLY,Google_Service_Classroom::CLASSROOM_STUDENT_SUBMISSIONS_STUDENTS_READONLY]); // Example scope, add more as needed
 
 		// Load previously authorized credentials from a file
 //		$credentialsPath = '~/.credentials/google-classroom-php-quickstart.json'; // Adjust path as needed
@@ -61,10 +60,10 @@ class Auth extends ClientBase
 //			$gClient->setAccessToken($accessToken);
 //		} else {
 			// Request authorization from the user
-			$authUrl = $gClient->createAuthUrl();
+			$authUrl = $this->gClient->createAuthUrl();
 
 			return $authUrl;
-			header('Location: '.$authUrl); exit;
+			//header('Location: '.$authUrl); exit;
 			//printf("Open the following link in your browser:\n%s\n", $authUrl);
 			//print 'Enter verification code: ';
 			//$authCode = trim(fgets(STDIN));
@@ -87,27 +86,28 @@ class Auth extends ClientBase
 	/**
 	 * @throws \Exception
 	 */
-	public function getBearerToken($grantType,$code)
+	public function getBearerToken($code)
 	{
 		try{
-			$url = 'https://oauth2.googleapis.com/token';
-			$headers = [
-				'Content-Type' => 'application/x-www-form-urlencoded'
-			];
-			$options = [
-				'form_params' => [
-					'grant_type' => $grantType,
-					'client_id' => $this->clientId,
-					'client_secret' => $this->clientSecret,
-					'redirect_uri' => $this->redirectUri,
-					'code' => $code
-				]];
-
-			$request = new Request('POST', $url, $headers);
-			$res = $this->client->send($request, $options);
-			$payload = json_decode($res->getBody()->getContents());
-			$this->token = $payload->access_token;
-			return $payload;
+			$accessToken = $this->gClient->fetchAccessTokenWithAuthCode($code);
+//			$url = 'https://oauth2.googleapis.com/token';
+//			$headers = [
+//				'Content-Type' => 'application/x-www-form-urlencoded'
+//			];
+//			$options = [
+//				'form_params' => [
+//					'grant_type' => $grantType,
+//					'client_id' => $this->clientId,
+//					'client_secret' => $this->clientSecret,
+//					'redirect_uri' => $this->redirectUri,
+//					'code' => $code
+//				]];
+//
+//			$request = new Request('POST', $url, $headers);
+//			$res = $this->client->send($request, $options);
+//			$payload = json_decode($res->getBody()->getContents());
+//			$this->token = $payload->access_token;
+			return $accessToken;
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
