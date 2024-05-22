@@ -22,9 +22,9 @@ class Courses extends ClientBase
 	public function getList($teacherId = 'me')
 	{
 		try{
-			$url = $this->url;
+			$url = $this->url.'?courseStates=ACTIVE';
 			if($teacherId != null){
-				$url = $url.'?teacherId='.$teacherId;
+				$url = $url.'&teacherId='.$teacherId;
 			}
 			$request = new Request('GET', $url, $this->headers);
 			$res = $this->client->send($request);
@@ -180,8 +180,7 @@ class Courses extends ClientBase
 	public function addGradeCourseworkSubmission($courseId, $courseWorkId, $submission,$body)
 	{
 		try{
-			$updateMask = array_keys(json_decode($body,true));
-			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$courseWorkId.'/studentSubmissions/'.$submission.'?updateMask='.$updateMask[0], $this->headers,$body);
+			$request = new Request('PATCH', $this->url.'/'.$courseId.'/courseWork/'.$courseWorkId.'/studentSubmissions/'.$submission.'?updateMask=draftGrade,assignedGrade', $this->headers,$body);
 			$res = $this->client->send($request);
 			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
