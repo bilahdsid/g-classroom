@@ -99,16 +99,15 @@ class Courses extends ClientBase
 	/**
 	 * @throws \Exception
 	 */
-	public function getCourseworkByCourse($courseId)
+	public function getCourseworkByCourse($courseId,$courseWorkId)
 	{
 		try{
-			$request = new Request('GET', $this->url.'/'.$courseId.'/courseWork', $this->headers);
+			$request = new Request('GET', $this->url.'/'.$courseId.'/courseWork/'.$courseWorkId, $this->headers);
 			$res = $this->client->send($request);
 			return $this->transformResponse($res->getBody()->getContents());
 		}catch (\Exception $e){
 			throw new \Exception($e->getMessage(),$e->getCode());
 		}
-
 	}
 
 	/**
