@@ -113,12 +113,18 @@ class Courses extends ClientBase
 	/**
 	 * @throws \Exception
 	 */
-	public function getClassworkStudentSubmissions($courseId, $courseWorkId, $userId = null)
+	public function getClassworkStudentSubmissions($courseId, $courseWorkId, $userId = null,$states = null)
 	{
 		try{
+			$q = false;
 			$url = $this->url.'/'.$courseId.'/courseWork/'.$courseWorkId.'/studentSubmissions';
 			if($userId != null){
+				$q = true;
 				$url = $url.'?userId='.$userId;
+			}
+			if($states != null){
+				$and = $q ? '&' : '?';
+				$url = $url.$and .'states='.$states;
 			}
 			$request = new Request('GET',$url , $this->headers);
 			$res = $this->client->send($request);
