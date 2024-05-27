@@ -51,6 +51,22 @@ class Courses extends ClientBase
 		}
 	}
 
+
+	/**
+	 * @throws \Exception
+	 */
+	public function get($id)
+	{
+		try{
+			$url = $this->url.'/'.$id;
+			$request = new Request('GET', $url, $this->headers);
+			$res = $this->client->send($request);
+			return $this->transformResponse($res->getBody()->getContents());
+		}catch (\Exception $e){
+			throw new \Exception($e->getMessage(),$e->getCode());
+		}
+	}
+
 	/**
 	 * @throws \Exception
 	 */

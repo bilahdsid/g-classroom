@@ -1,3 +1,5 @@
 /vendor/
 /test.php
 .idea/
+/.idea
+git tag -l
